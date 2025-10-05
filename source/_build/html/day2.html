@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+
+<html lang="y" data-content_root="./">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>DAY 2 &#8212; ADVENT OF CODE DOCS USING SPHINX 1.0 documentation</title>
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=8f2a1f02" />
+    <link rel="stylesheet" type="text/css" href="_static/nature.css?v=279e0f84" />
+    <script src="_static/documentation_options.js?v=be683c08"></script>
+    <script src="_static/doctools.js?v=9bcbadda"></script>
+    <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="prev" title="Advent of code, and how i solved it!" href="index.html" /> 
+  </head><body>
+    <div class="related" role="navigation" aria-label="Related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="index.html" title="Advent of code, and how i solved it!"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">ADVENT OF CODE DOCS USING SPHINX 1.0 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">DAY 2</a></li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <section id="day-2">
+<h1>DAY 2<a class="headerlink" href="#day-2" title="Link to this heading">¶</a></h1>
+<p>the input in <a class="reference external" href="https://adventofcode.com/2024/day/2">Day 2</a> is a bunch of lines of numbers, called reports, the objective was to count how many reports are safe.
+We need to check for every sequence if it is safe, for that we use the <code class="docutils literal notranslate"><span class="pre">is_safe()</span></code> function:</p>
+<dl class="py function">
+<dt class="sig sig-object py" id="day2.is_safe">
+<span class="sig-prename descclassname"><span class="pre">day2.</span></span><span class="sig-name descname"><span class="pre">is_safe</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#day2.is_safe" title="Link to this definition">¶</a></dt>
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">Returns</span> <span class="pre">a</span> <span class="pre">bool,</span> <span class="pre">declaring</span> <span class="pre">the</span> <span class="pre">safety</span> <span class="pre">of</span> <span class="pre">the</span> <span class="pre">sequence.</span></span></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>sequence</strong> -- a sequence of numbers</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>if it's safe or not.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>bool</p>
+</dd>
+</dl>
+</dd></dl>
+
+<p>For it to be safe it has to be only Decreasing or Increasing,
+Additionally the difference between two consecutive numbers has to be atleast 1 and at most 3.</p>
+<p>take a look at the code!</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">length</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">sequence</span><span class="p">)</span>
+<span class="k">if</span> <span class="p">(</span><span class="n">length</span> <span class="o">==</span> <span class="mi">1</span><span class="p">):</span>
+    <span class="k">return</span> <span class="kc">True</span>
+<span class="k">if</span> <span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">sequence</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span> <span class="o">&lt;=</span> <span class="nb">int</span><span class="p">(</span><span class="n">sequence</span><span class="p">[</span><span class="mi">1</span><span class="p">])):</span> <span class="c1">## Increasing case</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="n">length</span><span class="o">-</span><span class="mi">1</span> <span class="p">):</span>
+        <span class="k">if</span> <span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">sequence</span><span class="p">[</span><span class="n">i</span><span class="p">])</span> <span class="o">&gt;=</span> <span class="nb">int</span><span class="p">(</span><span class="n">sequence</span><span class="p">[</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">])</span> <span class="ow">or</span> <span class="nb">int</span><span class="p">(</span><span class="n">sequence</span><span class="p">[</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">])</span> <span class="o">-</span> <span class="nb">int</span><span class="p">(</span><span class="n">sequence</span><span class="p">[</span><span class="n">i</span><span class="p">])</span> <span class="o">&gt;</span> <span class="mi">3</span> <span class="p">):</span>
+            <span class="k">return</span> <span class="kc">False</span>
+<span class="k">else</span><span class="p">:</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="n">length</span> <span class="o">-</span><span class="mi">1</span><span class="p">):</span> <span class="c1">## Decreasing case</span>
+        <span class="k">if</span> <span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">sequence</span><span class="p">[</span><span class="n">i</span><span class="p">])</span> <span class="o">&lt;=</span> <span class="nb">int</span><span class="p">(</span><span class="n">sequence</span><span class="p">[</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">])</span> <span class="ow">or</span> <span class="nb">int</span><span class="p">(</span><span class="n">sequence</span><span class="p">[</span><span class="n">i</span><span class="p">])</span> <span class="o">-</span> <span class="nb">int</span><span class="p">(</span><span class="n">sequence</span><span class="p">[</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">])</span> <span class="o">&gt;</span> <span class="mi">3</span> <span class="p">):</span>
+            <span class="k">return</span> <span class="kc">False</span>
+<span class="k">return</span> <span class="kc">True</span>
+</pre></div>
+</div>
+</section>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="Main">
+        <div class="sphinxsidebarwrapper">
+  <div>
+    <h3><a href="index.html">Table of Contents</a></h3>
+    <ul>
+<li><a class="reference internal" href="#">DAY 2</a><ul>
+<li><a class="reference internal" href="#day2.is_safe"><code class="docutils literal notranslate"><span class="pre">day2.is_safe()</span></code></a></li>
+</ul>
+</li>
+</ul>
+
+  </div>
+  <div>
+    <h4>Previous topic</h4>
+    <p class="topless"><a href="index.html"
+                          title="previous chapter">Advent of code, and how i solved it!</a></p>
+  </div>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/day2.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<search id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</search>
+<script>document.getElementById('searchbox').style.display = "block"</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="Related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="index.html" title="Advent of code, and how i solved it!"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">ADVENT OF CODE DOCS USING SPHINX 1.0 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">DAY 2</a></li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+    &#169; Copyright 2025, omar.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 8.2.3.
+    </div>
+  </body>
+</html>
